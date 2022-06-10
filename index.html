@@ -2,6 +2,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/2.1.2/all/gauge.min.js"></script>
     <script src="index.js"></script>
+    <link rel="stylesheet" href="style.css">
 <body>
 <h3>Instructions</h3>
 Sync the generator to the grid by matching the grid frequency (50Hz) and phase, by changing the position of the wicket gates.<br>
@@ -14,9 +15,7 @@ A few conditions will cause the controls to lock out, e.g. overspeed or running 
     <li>space - Closes the contactor to connect the generator to the grid</li>
     <li>Control "R" - Reset the system</li>
 </ul>
-<input hidden="true" type="button" id="gate_open" value="Open"><br>
-<input hidden="true" type="button" id="gate_close" value="Close"><br>
-<input hidden="true" type="button" id="close_contactor" value="Close Contactor"><br>
+
 
 <br>
       <canvas
@@ -107,5 +106,8 @@ A few conditions will cause the controls to lock out, e.g. overspeed or running 
       ></canvas>
 <br>
 <div id="locked_out" hidden="true" style="color: red"><h1>ALERT - Controls Locked</h1></div>
+<input type="button" class="gatecontrol" id="gate_open" value="Open"><br>
+<input type="button" class="gatecontrol" id="gate_close" value="Close"><br>
+<input type="button" class="gatecontrol" id="close_contactor" value="Close Contactor"><br>
 </body>
 </html>
