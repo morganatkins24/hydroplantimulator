@@ -49,14 +49,14 @@ function close_contactor() {
         if (!(generator_phase < 5 || generator_phase > 355)) {
             fail();
         } else {
-             contactor = 1;
+            contactor = 1;
         }
     }
 }
 
 function tick_sync(delta_t) {
 
-       // Model inertia of the generator
+    // Model inertia of the generator
 
     // Let's simulate some physics...
     // Let's assume force of water is directly proporiational to the wicket opening
@@ -96,7 +96,7 @@ function tick_run() {
 
     console.log("Current:" + wicket_gate_current);
     console.log("Target:" + wicket_gate_target);
-    let p_d = ((wicket_gate_current - wicket_gate_target)*80) - power_output;
+    let p_d = ((wicket_gate_current - wicket_gate_target) * 80) - power_output;
     power_output = power_output + (p_d / 5);
 
     if (power_output < 0) {
@@ -127,41 +127,46 @@ function tick() {
 setInterval(tick, 100);
 
 function randomIntFromInterval(min, max) { // min and max included
-  return Math.floor(Math.random() * (max - min + 1) + min)
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+function gateOpen() {
+    wicket_gate_setpoint = wicket_gate_setpoint + wicket_step;
+    if (wicket_gate_setpoint > 1) {
+        wicket_gate_setpoint = 1;
+    }
+}
+
+function gateClose() {
+    wicket_gate_setpoint = wicket_gate_setpoint - wicket_step;
+    if (wicket_gate_setpoint < 0) {
+        wicket_gate_setpoint = 0;
+    }
 }
 
 $(document).ready(function () {
     previous_tick_time = new Date().getTime();
 
     // Generate a slightly randomised wicket gate target
-    wicket_gate_target = randomIntFromInterval(25,35) / 100;
+    wicket_gate_target = randomIntFromInterval(25, 35) / 100;
 
-    $("#gate_open").click(function () {
-        wicket_gate_setpoint = wicket_gate_setpoint + wicket_step;
-        if (wicket_gate_setpoint > 1) {
-            wicket_gate_setpoint = 1;
-        }
-    });
-    $("#gate_close").click(function () {
-        wicket_gate_setpoint = wicket_gate_setpoint - wicket_step;
-        if (wicket_gate_setpoint < 0) {
-            wicket_gate_setpoint = 0;
-        }
-    });
-    $(document).keydown(function(e){
+
+    $("#gate_open").click(gateOpen);
+    $("#gate_close").click(gateClose);
+    $(document).keydown(function (e) {
         // q
-        if (e.which == 81){
+        if (e.which == 81) {
             if (!locked_out) {
                 $("#gate_close").click();
             }
         }
         // w
-        if (e.which == 87){
+        if (e.which == 87) {
             if (!locked_out) {
                 $("#gate_open").click();
             }
         }
-        if (e.which == 32){
+        if (e.which == 32) {
             if (!locked_out) {
                 $("#close_contactor").click();
             }
